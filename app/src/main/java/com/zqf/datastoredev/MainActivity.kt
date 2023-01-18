@@ -1,13 +1,14 @@
 package com.zqf.datastoredev
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.zqf.datastoredev.util.putInt
 import com.zqf.datastoredev.util.putString
 import com.zqf.datastoredev.util.sp
-import java.io.File
+import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.nio.charset.Charset
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,14 +19,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initFiles() {
+        //写入
         val fos: FileOutputStream = openFileOutput("testFile.txt", MODE_PRIVATE)
         fos.write("123".toByteArray())
+        fos.close()
+        //读取
+        val fis: FileInputStream = openFileInput("testFile.txt")
+        val buffer = ByteArray(1024)
+        val readCount = fis.read(buffer)
+        val str = String(buffer, 0, readCount, Charset.defaultCharset())
+        Log.e("TAG", "str::>> $str")
+        fis.close()
     }
 
     private fun initSpUtil() {
         putString("string_key", "123")
-        putInt("int_key", 123)
         val spStrV = sp.getString("string_key", "")
+        putInt("int_key", 123)
         val spIntV = sp.getInt("int_key", 0)
         Log.e("TAG", "spV: $spStrV spIntV: $spIntV")
     }
