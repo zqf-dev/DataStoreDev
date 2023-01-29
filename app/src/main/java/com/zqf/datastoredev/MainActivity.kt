@@ -19,11 +19,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initFiles() {
-        //写入
+        //写
         val fos: FileOutputStream = openFileOutput("testFile.txt", MODE_PRIVATE)
         fos.write("123".toByteArray())
         fos.close()
-        //读取
+        //读
         val fis: FileInputStream = openFileInput("testFile.txt")
         val buffer = ByteArray(1024)
         val readCount = fis.read(buffer)
