@@ -26,17 +26,23 @@ fun putInt(key: String, value: Int) {
 }
 
 fun putLong(key: String, value: Long) {
-    editor.putLong(key, value)
-    editor.commit()
+    editor.apply {
+        putLong(key, value)
+        commit()
+    }
 }
 
 fun putBoolean(key: String, value: Boolean) {
-    editor.putBoolean(key, value)
-    editor.commit()
+    editor.apply {
+        putBoolean(key, value)
+        commit()
+    }
 }
 
 fun putFloat(key: String, value: Float) {
-    editor.putFloat(key, value)
-    editor.commit()
+    editor.apply {
+        putFloat(key, value)
+        commit()
+    }
 }
 

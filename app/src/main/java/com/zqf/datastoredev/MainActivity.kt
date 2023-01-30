@@ -19,11 +19,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initFiles() {
-        //写
+        /**
+         * TODO 写
+         * MODE_PRIVATE：默认方式【其中创建的文件只能被调用应用程序(或所有共享相同的用户ID)】
+         * MODE_WORLD_READABLE：允许所有其他应用程序具有读访问权限
+         * MODE_WORLD_WRITEABLE：允许所有其他应用程序具有写访问权限
+         * MODE_APPEND：如果文件已经存在，然后将数据写入现有文件的末尾
+         * MODE_MULTI_PROCESS：
+         * MODE_ENABLE_WRITE_AHEAD_LOGGING：
+         * MODE_NO_LOCALIZED_COLLATORS：
+         *
+         */
         val fos: FileOutputStream = openFileOutput("testFile.txt", MODE_PRIVATE)
         fos.write("123".toByteArray())
         fos.close()
-        //读
+        /**
+         * TODO 读
+         */
         val fis: FileInputStream = openFileInput("testFile.txt")
         val buffer = ByteArray(1024)
         val readCount = fis.read(buffer)
