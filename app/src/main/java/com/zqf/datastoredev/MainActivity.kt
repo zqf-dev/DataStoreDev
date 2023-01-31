@@ -49,6 +49,6 @@ class MainActivity : AppCompatActivity() {
         val spStrV = sp.getString("string_key", "")
         putInt("int_key", 123)
         val spIntV = sp.getInt("int_key", 0)
-        Log.e("TAG", "spV: $spStrV spIntV: $spIntV")
+        Log.e("TAG", "spStrValue: $spStrV spIntValue: $spIntV")
     }
 }
