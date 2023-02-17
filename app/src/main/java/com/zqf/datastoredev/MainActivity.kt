@@ -18,6 +18,14 @@ class MainActivity : AppCompatActivity() {
         initFiles()
     }
 
+    private fun initSpUtil() {
+        putString("string_key", "123")
+        val spStrV = sp.getString("string_key", "")
+        putInt("int_key", 123)
+        val spIntV = sp.getInt("int_key", 0)
+        Log.e("TAG", "spStrValue: $spStrV spIntValue: $spIntV")
+    }
+
     private fun initFiles() {
         /**
          * TODO 写
@@ -42,13 +50,5 @@ class MainActivity : AppCompatActivity() {
         val str = String(buffer, 0, readCount, Charset.defaultCharset())
         Log.e("TAG", "str::>> $str")
         fis.close()
-    }
-
-    private fun initSpUtil() {
-        putString("string_key", "123")
-        val spStrV = sp.getString("string_key", "")
-        putInt("int_key", 123)
-        val spIntV = sp.getInt("int_key", 0)
-        Log.e("TAG", "spStrValue: $spStrV spIntValue: $spIntV")
     }
 }
