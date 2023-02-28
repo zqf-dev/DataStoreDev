@@ -1,8 +1,10 @@
 package com.zqf.datastoredev
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.zqf.datastoredev.util.KillCheckService
 import com.zqf.datastoredev.util.putInt
 import com.zqf.datastoredev.util.putString
 import com.zqf.datastoredev.util.sp
@@ -24,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         putInt("int_key", 123)
         val spIntV = sp.getInt("int_key", 0)
         Log.e("TAG", "spStrValue: $spStrV spIntValue: $spIntV")
+        startService(Intent(this, KillCheckService::class.java))
     }
 
     private fun initFiles() {

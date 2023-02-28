@@ -1,4 +1,4 @@
-package com.sensorsdata.analytics.android.sdk.util;
+package com.zqf.datastoredev.util;
 
 import android.app.ActivityManager;
 import android.app.Service;
@@ -6,15 +6,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
-import android.text.TextUtils;
-
-import com.sensorsdata.analytics.android.sdk.SALog;
-import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
-import com.sensorsdata.analytics.android.sdk.network.HttpCallback;
-import com.sensorsdata.analytics.android.sdk.network.HttpMethod;
-import com.sensorsdata.analytics.android.sdk.network.RequestHelper;
-import com.sensorsdata.analytics.android.sdk.plugin.encrypt.SAStoreManager;
-
+import android.util.Log;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -29,11 +21,11 @@ public class KillCheckService extends Service {
     public void onCreate() {
         timer = new Timer();
         mPN = AppInfoUtils.getProcessName(this);
-        SALog.i(TAG, "mPackageName: >> " + mPN);
+        Log.i(TAG, "mPackageName: >> " + mPN);
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                SALog.i(TAG, "开始检查服务");
+                Log.i(TAG, "开始检查服务");
                 Message message = new Message();
                 message.what = 0x101;
                 mHandler.sendMessage(message);
@@ -42,13 +34,19 @@ public class KillCheckService extends Service {
         super.onCreate();
     }
 
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+
+        return super.onStartCommand(intent, flags, startId);
+    }
+
     private final Handler mHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
             try {
                 if (msg.what == 0x101) {
                     if (!isBackgroundRunning()) {
-                        SALog.i(TAG, "退出操作");
+                        Log.i(TAG, "退出操作");
                         visualDisconnect();
                     }
                 }
@@ -78,31 +76,7 @@ public class KillCheckService extends Service {
      */
     private void visualDisconnect() {
         try {
-            String sign = SAStoreManager.getInstance().getString("sign", "");
-            if (!TextUtils.isEmpty(sign)) {
-                String url = SensorsDataAPI.sharedInstance().getServerUrl() + "/connect/disconnect/" + sign;
-                new RequestHelper.Builder(HttpMethod.GET, url).callback(new HttpCallback.StringCallback() {
-                    @Override
-                    public void onFailure(int code, String errorMessage) {
-                        SALog.i(TAG, "reqVisualDisconnect return error Message: >> " + errorMessage);
-                    }
-
-                    @Override
-                    public void onResponse(String response) {
-                        SALog.i(TAG, "reqVisualDisconnect success response: >> " + response);
-                    }
-
-                    @Override
-                    public void onAfter() {
-                        try {
-                            SAStoreManager.getInstance().setString("sign", "");
-                            onDestroy();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }).execute();
-            }
+            Log.i(TAG, "reqVisualDisconnect return error Message: >> ");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -113,7 +87,7 @@ public class KillCheckService extends Service {
         if (timer != null) {
             timer.cancel();
         }
-        SALog.i(TAG, "销毁服务");
+        Log.i(TAG, "销毁服务");
         super.onDestroy();
     }
 
